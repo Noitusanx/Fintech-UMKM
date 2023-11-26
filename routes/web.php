@@ -46,7 +46,7 @@ Route::delete('/produk/{id}', [FintechController::class, 'destroy'])->name('prod
 
 Route::get('/produk/{id}/detail', [FintechController::class, 'product_detail'])->name('produk.product_detail');
 
-// Finansial
+Route::post('produk/{id}/detail', [FintechController::class, 'storeRate'])->name('ulasan');
 
 Route::get('/finansial', [FintechController::class,'finansial'])->name('finansial')->middleware('admin');
 

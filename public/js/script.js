@@ -3,41 +3,79 @@ function updateSelectedFileName(input) {
     document.getElementById('selectedFileName').innerText = input.files[0].name;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Tampilkan semua produk saat halaman dimuat
-  var productItems = document.querySelectorAll('.bg-white.rounded-lg.product-shadow');
-  productItems.forEach(function(item) {
-      item.style.display = 'block';
-  });
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Tampilkan semua produk saat halaman dimuat
+//     var productItems = document.querySelectorAll('.bg-white.rounded-lg.product-shadow');
+    
+//     // Tangani klik pada tombol filter
+//     var filterButtons = document.querySelectorAll('.filter-button');
+//     filterButtons.forEach(function (button) {
+//         button.addEventListener('click', function () {
+//             var selectedCategory = button.dataset.filter;
 
-  // Tangani klik pada tombol filter
-  var filterButtons = document.querySelectorAll('.filter-button');
-  filterButtons.forEach(function(button) {
-      button.addEventListener('click', function() {
-          var selectedCategory = button.dataset.filter;
+//             // Sembunyikan semua produk
+//             productItems.forEach(function (item) {
+//                 item.style.display = 'none';
+//             });
 
-          // Sembunyikan semua produk
-          productItems.forEach(function(item) {
-              item.style.display = 'none';
-          });
+//             // Tampilkan produk dengan kategori yang dipilih
+//             if (selectedCategory === 'Seluruhnya') {
+//                 // Jika tombol "Seluruhnya" diklik, tampilkan semua produk dan biarkan urutan default
+//                 productItems.forEach(function (item) {
+//                     item.style.display = 'block';
+//                 });
+//             } else {
+//                 // Jika kategori lain yang dipilih, tampilkan produk dengan kategori tersebut
+//                 var selectedCategoryItems = document.querySelectorAll('.bg-white.rounded-lg.product-shadow[data-category="' + selectedCategory + '"]');
+                
+//                 // Susun ulang elemen produk untuk menempatkan produk di paling kiri
+//                 selectedCategoryItems.forEach(function (item) {
+//                     // Pindahkan elemen ke posisi paling kiri
+//                     item.style.display = 'block';
+//                     // Masukkan elemen di posisi paling kiri dalam container (gunakan parentElement sesuai dengan struktur HTML)
+//                     item.parentElement.prepend(item);
+//                 });
+//             }
+//         });
+//     });
+// });
 
-          // Tampilkan produk dengan kategori yang dipilih
-          if (selectedCategory === 'Semua') {
-              productItems.forEach(function(item) {
-                  item.style.display = 'block';
-              });
-          } else {
-              var selectedCategoryItems = document.querySelectorAll('.bg-white.rounded-lg.product-shadow[data-category="' + selectedCategory + '"]');
-              selectedCategoryItems.forEach(function(item) {
-                  item.style.display = 'block';
-              });
-          }
-      });
-  });
+document.addEventListener('DOMContentLoaded', function () {
+    // Tampilkan semua produk saat halaman dimuat
+    var productItems = document.querySelectorAll('.bg-white.rounded-lg.product-shadow');
+
+    // Tangani klik pada tombol filter
+    var filterButtons = document.querySelectorAll('.filter-button');
+    filterButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var selectedCategory = button.dataset.filter;
+
+            // Sembunyikan semua produk
+            productItems.forEach(function (item) {
+                item.style.display = 'none';
+            });
+
+            // Tampilkan produk dengan kategori yang dipilih
+            if (selectedCategory === 'Seluruhnya') {
+                // Jika tombol "Seluruhnya" diklik, tampilkan semua produk dan biarkan urutan default
+                productItems.forEach(function (item) {
+                    item.style.display = 'block';
+                });
+            } else {
+                // Jika kategori lain yang dipilih, tampilkan produk dengan kategori tersebut
+                var selectedCategoryItems = document.querySelectorAll('.bg-white.rounded-lg.product-shadow[data-category="' + selectedCategory + '"]');
+                
+                // Susun ulang elemen produk untuk menempatkan produk di paling kiri
+                selectedCategoryItems.forEach(function (item) {
+                    // Pindahkan elemen ke posisi paling kiri
+                    item.style.display = 'block';
+                    // Masukkan elemen di posisi paling kiri dalam container (gunakan parentElement sesuai dengan struktur HTML)
+                    item.parentElement.insertBefore(item, item.parentElement.firstElementChild);
+                });
+            }
+        });
+    });
 });
-
-
-
 
 function toggleDropdown() {
   var dropdown = document.getElementById("dropdown");

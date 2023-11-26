@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Financial;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +46,7 @@ class FintechController extends Controller
         return view('pages.admin.dashboard', compact('jumlahProduk', 'totalPemasukan', 'totalPengeluaran', 'totalKeseluruhan', 'financialData'));
     }
     public function produk(){
-        $products = Product::all(); 
+        $products = Product::with('rates')->get();
 
         return view('pages.admin.produk', compact('products'));    
     }
@@ -205,9 +206,19 @@ class FintechController extends Controller
 
     public function product_detail($id){
         $product = Product::find($id);
-        return view('pages.detailproduk', compact('product'));
+    
+        if (!$product) {
+            // Handle jika produk tidak ditemukan
+            abort(404);
+        }
+        
+        $averageRating = $product->rates->avg('rate');
+    
+        $product->loadCount('rates'); 
+        $reviews = $product->rates;
+    
+        return view('pages.detailproduk', compact('product', 'reviews', 'averageRating'));
     }
-
     // Finansial
 
     public function form_finansial(){
@@ -268,5 +279,42 @@ public function editFinansial($id){
         Financial::find($id)->delete();
         return redirect('finansial');
     }
+
+    public function storeRate(Request $request, $id)
+{
+    $request->validate([
+        'rate' => 'required',
+        'ulasan' => 'nullable|string',
+    ]);
+
+    $user = auth()->user();
+
+    // Cek apakah pengguna sudah memberikan rating pada produk ini
+    $existingReview = Review::where('user_id', $user->id)
+        ->where('product_id', $id)
+        ->first();
+
+    if ($existingReview) {
+        // Jika sudah, update rating yang sudah ada
+        $existingReview->update([
+            'rate' => $request->input('rate'),
+            'ulasan' => $request->input('ulasan'),
+        ]);
+
+        return redirect()->back()->with('success', 'Rating berhasil diperbarui');
+    }
+
+    // Jika belum, buat rating baru
+    $review = new Review([
+        'user_id' => $user->id,
+        'product_id' => $id,
+        'rate' => $request->input('rate'),
+        'ulasan' => $request->input('ulasan'),
+    ]);
+
+    $review->save();
+
+    return redirect()->back()->with('success', 'Rating berhasil ditambahkan');
+}
 
 }

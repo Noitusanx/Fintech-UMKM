@@ -178,7 +178,6 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Carousel */
 .carousel-container {
   max-width: 298px;
 }
@@ -187,6 +186,112 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 295px; /* Lebar thumbnail yang diinginkan */
-  height: 200px; /* Tinggi thumbnail yang diinginkan */
+  width: 295px;
+  height: 200px;
 }
+
+/* Penilaian */
+.penilaian span {
+  display: inline-flex;
+  flex-flow: row-reverse;
+}
+
+
+
+.penilaian label{
+  font-size: 2rem;
+  cursor: pointer;
+  color: lightgrey;
+  margin: 0 5px;
+  text-shadow: 1px 1px #bbb;
+ 
+}
+
+.rtl {
+  direction: rtl;
+}
+.penilaian:not(:checked) > span input {
+  position: absolute;
+  right: 100vw;
+}
+
+.penilaian:not(:checked) > span label {
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 30px;
+  color: #ccc;
+}
+
+.penilaian:not(:checked) > span label:before {
+  content: "★ ";
+}
+
+.penilaian > span input:checked ~ label {
+  color: gold;
+}
+
+.penilaian:not(:checked) > span label:hover,
+.penilaian:not(:checked) > span label:hover ~ label {
+  color: gold;
+}
+
+/* product rate */
+
+.rate {
+  display: flex;
+  align-items: center;
+}
+
+.rate p {
+  margin-right: 10px;
+  margin-bottom: 1rem;
+}
+
+.rate label {
+  float: right;
+  font-size: 1.8rem;
+  color: lightgrey;
+  margin-bottom: .85rem;
+  margin-right: .2rem;
+  text-shadow: 1px 1px #bbb;
+}
+
+.rate label:before {
+  content: '★' ;
+  color: gold ;
+  box-shadow: goldenrod;
+}
+
+.rate :not(:checked) > label:hover,
+.rate :not(:checked) > label:hover ~ label {
+  color: black;
+}
+
+.rate .result:before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  left: 50%;
+  transform: translateX(-47%);
+  bottom: -30px;
+  font-size: 30px;
+  font-weight: 500;
+  color: gold;
+  font-family: 'Poppins', sans-serif;
+  display: none;
+}
+
+.rate input{
+  display: none;
+}
+
+.star.active {
+  --active-color: #ffd700; /* Warna emas */
+}
+
+.star.inactive {
+  --inactive-color: #c9d0d6; /* Warna abu-abu */
+}
+
