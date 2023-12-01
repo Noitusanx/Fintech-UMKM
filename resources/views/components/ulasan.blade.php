@@ -4,7 +4,8 @@
         <label for="exampleFormControlTextarea1">Rating Produk</label>
         <div class="penilaian">
             <span>
-                <input type="radio" id="star5a" data-product-id="@Model.ProductId" class="star" name="rate" value="5" />
+                <input type="radio" id="star5a" data-product-id="@Model.ProductId" class="star" name="rate" value="5"
+                    required />
                 <label for="star5a" title="5 Stars" class="{{ $averageRating >= 5 ? 'active' : 'inactive' }}"></label>
                 <input type="radio" id="star4a" data-product-id="@Model.ProductId" class="star" name="rate" value="4" />
                 <label for="star4a" title="4 Star" class="{{ $averageRating >= 5 ? 'active' : 'inactive' }}"></label>
@@ -25,7 +26,7 @@
                 placeholder="Ketik ulasan..."></textarea>
         </div>
         <div class="flex items-center justify-end mt-4 sm:mt-6">
-            <button type="submit"
+            <button type="submit" onclick="validateAndSubmit()"
                 class="px-5 py-2.5 text-sm font-semibold text-center text-black rounded-lg bg-button-gradient focus:ring-4 focus:ring-primary-900 hover:opacity-70">
                 Buat Ulasan
             </button>
@@ -51,4 +52,19 @@
             });
         });
     });
+
+        function validateAndSubmit() {
+        var selectedRating = document.querySelector('input[name="rate"]:checked');
+        var ulasan = document.getElementById('comment').value;
+
+        if (!selectedRating) {
+            alert('Mohon berikan rating sebelum mengirim ulasan.');
+            return;
+        }
+
+        // Jika rating sudah dipilih, lanjutkan dengan mengirim formulir
+        document.getElementById('selected_rating').value = selectedRating.value;
+        document.getElementById('reviewForm').submit();
+    }
+
 </script>

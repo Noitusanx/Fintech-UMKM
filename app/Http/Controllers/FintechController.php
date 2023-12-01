@@ -58,6 +58,7 @@ class FintechController extends Controller
         $totalKeseluruhan = $totalPemasukan - $totalPengeluaran;
         return view('pages.admin.finansial.finansial', compact('financials', 'totalPemasukan', 'totalPengeluaran', 'totalKeseluruhan'));     
     }
+    
     public function login(){
         return view('pages.auth.login');    
     }
@@ -216,8 +217,11 @@ class FintechController extends Controller
     
         $product->loadCount('rates'); 
         $reviews = $product->rates;
+
+        $jumlahUlasan = $product->ulasan()->count();
+
     
-        return view('pages.detailproduk', compact('product', 'reviews', 'averageRating'));
+        return view('pages.detailproduk', compact('product', 'reviews', 'averageRating', 'jumlahUlasan'));
     }
     // Finansial
 
@@ -280,8 +284,7 @@ public function editFinansial($id){
         return redirect('finansial');
     }
 
-    public function storeRate(Request $request, $id)
-{
+    public function storeRate(Request $request, $id){
     $request->validate([
         'rate' => 'required',
         'ulasan' => 'nullable|string',

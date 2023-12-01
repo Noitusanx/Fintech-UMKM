@@ -18,6 +18,11 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function ulasan()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function rates(){
         return $this->hasMany(Review::class);
     }

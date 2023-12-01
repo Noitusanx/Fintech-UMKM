@@ -105,14 +105,15 @@
             <div class="min-h-[340px] md:flex-row mx-4 shadow-md mt-8">
                 <div class="md:flex-1 px-4 flex">
                     <div class="my-4 w-1/2">
-                        <small class="text-base font-bold text-gray-700 ml-1">4 comments</small>
+                        <small class="text-base font-bold text-gray-700 ml-1">{{ $jumlahUlasan }} ulasan</small>
                         <div class="mt-4">
                             <div class="justify-between px-1">
                                 @foreach ($reviews as $review)
                                 @if (!empty($review->ulasan))
                                 <div class="flex-1 pl-1 py-2">
                                     <div>
-                                        <div class="text-base font-semibold text-gray-600">{{ $review->user->username}}
+                                        <div class="text-base font-semibold text-gray-600">{{
+                                            $review->user->username}}
                                         </div>
                                         <div class="flex justify-between">
                                             <p class="text-sm font-normal text-gray-500">{{
