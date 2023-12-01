@@ -4,7 +4,7 @@
 <div class="flex">
     @include('components.sidebar')
     <div class="px-4 pb-4 sm:ml-64 bg-[#F5F7F8] h-screen w-full">
-        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        <div class="p-4 border-2 border-dashed rounded-lg border-gray-700">
             <div class="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                 <div
                     class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 border border-blue-gray-100 shadow-sm">

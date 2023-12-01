@@ -48,7 +48,7 @@ class FintechController extends Controller
     public function produk(){
         $products = Product::with('rates')->get();
 
-        return view('pages.admin.produk', compact('products'));    
+        return view('pages.admin.produk.produk', compact('products'));    
     }
 
     public function finansial(){
@@ -56,13 +56,13 @@ class FintechController extends Controller
         $totalPemasukan = $financials->sum('pemasukan');
         $totalPengeluaran = $financials->sum('pengeluaran');
         $totalKeseluruhan = $totalPemasukan - $totalPengeluaran;
-        return view('pages.admin.finansial', compact('financials', 'totalPemasukan', 'totalPengeluaran', 'totalKeseluruhan'));     
+        return view('pages.admin.finansial.finansial', compact('financials', 'totalPemasukan', 'totalPengeluaran', 'totalKeseluruhan'));     
     }
     public function login(){
-        return view('pages.login');    
+        return view('pages.auth.login');    
     }
     public function register(){
-        return view('pages.register');    
+        return view('pages.auth.register');    
     }
 
     public function authenticate(Request $request)
@@ -121,7 +121,7 @@ class FintechController extends Controller
     // Produk
 
     public function form_produk(){
-        return view('pages.admin.tambahproduk');
+        return view('pages.admin.produk.tambahproduk');
     }
 
     public function store(Request $request)
@@ -164,7 +164,7 @@ class FintechController extends Controller
     public function edit($id){
         $product = Product::find($id);
 
-        return view('pages.admin.editproduk', compact('product'));
+        return view('pages.admin.produk.editproduk', compact('product'));
     }
 
     public function update(Request $request, $id){
@@ -222,7 +222,7 @@ class FintechController extends Controller
     // Finansial
 
     public function form_finansial(){
-        return view('pages.admin.tambahfinansial');
+        return view('pages.admin.finansial.tambahfinansial');
     }
 
     public function storeFinansial(Request $request)
