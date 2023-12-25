@@ -13,12 +13,6 @@ use Illuminate\Support\Str;
 
 class FintechController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $toggle = $request->has('toggle') ? $request->input('toggle') : false;
-
-    //     return view('pages.landingpage', compact('toggle'));
-    // }
 
     public function index(Request $request){
         $toggle = $request->has('toggle') ? $request->input('toggle') : false;
@@ -320,4 +314,15 @@ public function editFinansial($id){
     return redirect()->back()->with('success', 'Rating berhasil ditambahkan');
 }
 
+    public function settings(){
+        return view('pages.admin.settings');
+    }
+
+    public function lupa_password(){
+        return view('pages.admin.lupa_password');
+    }
+    
+    public function reset_password(){
+        return view('pages.admin.reset_password');
+    }
 }

@@ -3,6 +3,15 @@ function updateSelectedFileName(input) {
     document.getElementById('selectedFileName').innerText = input.files[0].name;
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    var toggleButton = document.getElementById("toggleButton");
+    var sidebar = document.getElementById("sidebar");
+
+    toggleButton.addEventListener("click", function () {
+        sidebar.classList.toggle("hidden");
+    });
+});
+
 // document.addEventListener('DOMContentLoaded', function () {
 //     // Tampilkan semua produk saat halaman dimuat
 //     var productItems = document.querySelectorAll('.bg-white.rounded-lg.product-shadow');

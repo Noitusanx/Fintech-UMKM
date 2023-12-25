@@ -14,7 +14,7 @@
     <div className="sm:px-16 px-6 flex justify-center items-center">
       <div className="xl:max-w-[1280px] w-full">
         <nav class="w-full flex py-6 justify-between items-center sm:px-16 mb-10">
-          <a href="{{ url('/') }}">
+          <a href="{{ url('/') }}" class="ml-6 sm:ml-0">
             <h1 class="navbar-title">Fintech</h1>
           </a>
           <ul class="list-none sm:flex hidden justify-end items-center flex-1">
@@ -31,6 +31,7 @@
               <a href="#kontak">Kontak</a>
             </li>
             @auth
+            @if (auth()->user()->is_admin)
             <div class="relative inline-block text-left font-poppins">
               <div>
                 <button type="button"
@@ -62,9 +63,39 @@
               </div>
             </div>
             @else
+            <div class="relative inline-block text-left font-poppins">
+              <div>
+                <button type="button"
+                  class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  id="menu-button" aria-expanded="true" aria-haspopup="true" onclick="toggleDropdown()">
+                  <a class="nav-user group-hover:bg-gray-200" href="#" id="navbarDropdown" role="button"
+                    aria-expanded="false">
+                    Hi, {{ auth()->user()->username }}
+                  </a>
+                  <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+              <div id="dropdown"
+                class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <div class="py-1" role="none">
+                  <form method="POST" action="/keluar" role="none">
+                    @csrf
+                    <button type="submit" class="text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem"
+                      tabindex="-1" id="nav-keluar">Keluar</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            @endif
+            @else
             <li
               class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] bg-button-gradient px-3 py-1 rounded-md mr-10">
-              <a href="{{ url('/daftar') }}">Daftar</a>
+              <a href="{{ url('/daftar') }}">Registrasi</a>
             </li>
             <li
               class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] bg-button-login-gradient px-3 py-1 rounded-md mr-0">
@@ -72,13 +103,61 @@
               @endauth
             </li>
           </ul>
+          <div class="sm:hidden flex flex-1 justify-end items-center mr-4">
+            <img src="{{ asset($toggle ? 'images/close.svg' : 'images/burgerbar.png') }}" alt="menu"
+              class="w-[28px] h-[28px] object-contain" id="toggleButton" />
+          </div>
+          <div
+            class="{{ $toggle ? 'flex' : 'hidden' }} p-6 bg-white text-gray-700 shadow-lg absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar border"
+            id="sidebar">
+            <ul class="list-none flex-col justify-end items-center flex-1">
+              <li class="font-poppins font-normal mb-2 hover:opacity-60 cursor-pointer text-[16px] mr-10">
+                <a href="#beranda">Beranda</a>
+              </li>
+              <li class="font-poppins font-normal mb-2 hover:opacity-60 cursor-pointer text-[16px] mr-10">
+                <a href="#kategori">Kategori</a>
+              </li>
+              <li class="font-poppins font-normal mb-2 hover:opacity-60 cursor-pointer text-[16px] mr-10">
+                <a href="#produk">Produk</a>
+              </li>
+              <li class="font-poppins font-normal mb-2 hover:opacity-60 cursor-pointer text-[16px] mr-10">
+                <a href="#kontak">Kontak</a>
+              </li>
+
+              @auth
+              @if (auth()->user()->is_admin)
+              <li class="font-poppins font-normal mb-4 hover:opacity-60 cursor-pointer text-[16px] mr-10">
+                <a href="/dashboard" id="nav-dashboard">Dashboard</a>
+              </li>
+              @endif
+              <li class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] mr-10 mt-4">
+                <form method="POST" action="/keluar" role="none">
+                  @csrf
+                  <button type="submit" class=" text-red-600" role="menuitem" tabindex="-1"
+                    id="nav-keluar">Keluar</button>
+                </form>
+              </li>
+              @endauth
+
+              @guest
+              <li
+                class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] mr-10 mt-4 mb-2 text-[#1ad312]">
+                <a href="{{ route('login') }}">Masuk</a>
+              </li>
+              <li class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] mr-10 text-[#2bbcd2]">
+                <a href="{{ route('register') }}">Registrasi</a>
+              </li>
+              @endguest
+            </ul>
+
+          </div>
         </nav>
       </div>
     </div>
     <div className="bg-primary flex justify-center items-start">
       <div className="xl:max-w-[1280px] w-full">
-        <section id="beranda" class="flex md:flex-row flex-col paddingY mb-5">
-          <div class="flex-1 flexStart flex-col xl:px-0 sm:px-16 px-6">
+        <section id="beranda" class="flex md:flex-row flex-col ">
+          <div class="flex-1 flexStart flex-col xl:px-16 px-6">
             <div class="flex flex-row justify-between items-center w-full">
               <h1
                 class="flex-1 font-poppins font-semibold ss:text-[72px] text-[52px] ss:leading-[100px] leading-[75px]">

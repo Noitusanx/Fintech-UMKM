@@ -1,8 +1,8 @@
-@include('components.navbar')
+@extends('layouts.admin_page')
+@section('title', 'Fintech')
 
-@include('components.sidebar')
-
-<div class="px-4 pb-4 sm:ml-64 font-poppins">
+@section('content')
+<div class="px-4 pb-4 mt-6">
     <div class="p-4 border-2 rounded-lg border-gray-700 ">
         <div class="flex justify-between items-center mb-6 border-b-2 border-black pb-2">
             <h1 class="m-0 text-[28px] font-bold">Produk</h1>
@@ -91,3 +91,4 @@
 
     </div>
 </div>
+@endsection

@@ -61,6 +61,12 @@ Route::post('/finansial/{id}', [FintechController::class, 'updateFinansial'])->n
 
 Route::delete('/finansial/{id}', [FintechController::class, 'destroyFinansial'])->name('finansial.destroy');
 
+Route::get('/settings', [FintechController::class, 'settings'])->name('settings');
+
+Route::get('/autentikasi/lupa-katasandi', [FintechController::class, 'lupa_password'])->name('lupa_password');
+
+Route::get('/autentikasi/reset-katasandi', [FintechController::class, 'reset_password'])->name('reset_password');
+
 
 
 

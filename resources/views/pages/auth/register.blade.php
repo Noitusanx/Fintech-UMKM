@@ -10,42 +10,46 @@
 </head>
 
 <body>
-    <div class="flex justify-center items-center min-h-screen font-poppins">
-        <form action="/daftar" method="post" class="bg-blue-gradient p-6 rounded-lg">
-            @csrf
-            <h1 class="text-center text-3xl font-semibold mb-5">Buat Akun</h1>
-            <div class="mb-3">
-                <label>Nama</label>
-                <div>
-                    <input type="text" name="username" class="rounded-sm pl-2 bg-primary w-full border"
-                        onChange="handleChange" placeholder="Nama" />
+    <section class="bg-gray-50 dark:bg-gray-900 font-poppins">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div
+                class="w-full bg-white rounded-lg shadow-xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-center md:text-3xl text-xl font-semibold mb-5 leading-tight">Registrasi</h1>
+                    <form class="space-y-4 md:space-y-6 " action="/daftar" method="post">
+                        @csrf
+                        <div>
+                            <label for="nama"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                            <input type="text" name="username" id="username"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                placeholder="Nama" required="">
+                        </div>
+                        <div>
+                            <label for="email"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input type="email" name="email" id="email"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                placeholder="nama@gmail.com" required="">
+                        </div>
+                        <div>
+                            <label for="password"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kata Sandi</label>
+                            <input type="password" name="password" id="password" placeholder="••••••••"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                required="">
+                        </div>
+                        <button type="submit"
+                            class="w-full text-black font-semibold bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 text-center bg-blue-gradient">Registrasi</button>
+                        <div class="flex justify-center">
+                            <a href="{{ url('/masuk') }}" class="hover:opacity-70">Masuk</a>
+                        </div>
+                        <p class="text-center mt-auto pt-8">&copy; 2023 Fintech. Hak Cipta Dilindungi.</p>
+                    </form>
                 </div>
             </div>
-            <div class="mb-3">
-                <label>Email</label>
-                <div>
-                    <input type="email" name="email" class="rounded-sm pl-2 bg-primary w-full border"
-                        placeholder="email" />
-                    <p class="text-red-500 text-sm"></p>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label>Kata Sandi</label>
-                <div>
-                    <input type="password" name="password" class="rounded-sm pl-2 bg-primary w-full border"
-                        placeholder="Kata Sandi" />
-                    <p class="text-red-500 text-sm"></p>
-                </div>
-            </div>
-            <div class="flex justify-center mt-5 mb-2 login-color rounded-md py-1 hover:opacity-70">
-                <button type="submit">Daftar</button>
-            </div>
-            <div class="flex justify-center">
-                <a href="{{ url('/masuk') }}" class="hover:opacity-70">Masuk</a>
-            </div>
-            <p class="text-center mt-auto pt-8">&copy; 2023 Fintech. Hak Cipta Dilindungi.</p>
-        </form>
-    </div>
+        </div>
+    </section>
 </body>
 
 </html>
