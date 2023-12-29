@@ -44,6 +44,8 @@
   );
 }
 
+
+
 .bg-button-gradient {
   background: linear-gradient(
     157.81deg,
@@ -220,9 +222,10 @@
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 18px;
   color: #ccc;
 }
+
 
 .penilaian:not(:checked) > span label:before {
   content: "★ ";

@@ -14,31 +14,43 @@ use Illuminate\Support\Str;
 class FintechController extends Controller
 {
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $toggle = $request->has('toggle') ? $request->input('toggle') : false;
-        $products = Product::all(); // Ambil semua produk dari model Product
+    
+        // Ambil semua produk dari model Product
+        $products = Product::withCount([
+            'ulasan' => function ($query) {
+                // Filter ulasan yang memiliki teks ulasan
+                $query->whereNotNull('ulasan');
+            },
+        ])->get();
+    
         return view("pages.fintech", compact("toggle", "products"));
     }
-
     public function dashboard()
     {
         $jumlahProduk = Product::count();
         $financials = Financial::get();
-    
+
         $totalPemasukan = Financial::sum('pemasukan') ?? 0;
         $totalPengeluaran = Financial::sum('pengeluaran') ?? 0;
-    
+
         $totalKeseluruhan = $totalPemasukan - $totalPengeluaran;
-    
+
         $financialData = $financials->map(function ($financial) {
             return [
                 'tanggal' => $financial->tanggal->format('Y-m-d'),
                 'totalKeuangan' => $financial->pemasukan - $financial->pengeluaran,
             ];
         });
-    
+
+        // Sort the financial data based on the date
+        $financialData = $financialData->sortBy('tanggal');
+
         return view('pages.admin.dashboard', compact('jumlahProduk', 'totalPemasukan', 'totalPengeluaran', 'totalKeseluruhan', 'financialData'));
     }
+
     public function produk(){
         $products = Product::with('rates')->get();
 
@@ -64,7 +76,7 @@ class FintechController extends Controller
     {
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required|min:5'
         ]);
 
 
@@ -201,19 +213,19 @@ class FintechController extends Controller
 
     public function product_detail($id){
         $product = Product::find($id);
-    
+        
         if (!$product) {
             // Handle jika produk tidak ditemukan
             abort(404);
         }
         
         $averageRating = $product->rates->avg('rate');
-    
         $product->loadCount('rates'); 
-        $reviews = $product->rates;
-
-        $jumlahUlasan = $product->ulasan()->count();
-
+    
+        // Filter ulasan yang memiliki teks ulasan
+        $reviews = $product->ulasan()->whereNotNull('ulasan')->get();
+    
+        $jumlahUlasan = $reviews->count();
     
         return view('pages.detailproduk', compact('product', 'reviews', 'averageRating', 'jumlahUlasan'));
     }
@@ -314,15 +326,31 @@ public function editFinansial($id){
     return redirect()->back()->with('success', 'Rating berhasil ditambahkan');
 }
 
-    public function settings(){
+    public function settingsForm(){
         return view('pages.admin.settings');
     }
 
-    public function lupa_password(){
-        return view('pages.admin.lupa_password');
-    }
-    
-    public function reset_password(){
-        return view('pages.admin.reset_password');
+    public function settings(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ], [
+            'new_password.confirmed' => 'Kata sandi yang anda berikan tidak cocok!',
+        ]);
+
+
+        #Match The Old Password
+        if(!Hash::check($request->current_password, auth()->user()->password)){
+            return back()->with("error", "Kata sandi saat ini tidak cocok!");
+        }
+
+
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Kata sandi berhasil diubah!");
     }
 }

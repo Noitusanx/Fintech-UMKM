@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Fintech</title>
     @vite('resources/css/app.css')
 </head>
 
@@ -14,68 +14,108 @@
         <div className="sm:px-16 px-6 flex justify-center items-center">
             <div className="xl:max-w-[1280px] w-full">
                 <nav class="w-full flex py-6 justify-between items-center sm:px-16 mb-10">
-                    <a href="{{ url('/') }}">
-                        <h1 class="navbar-title">Fintech</h1>
+                    <a href="{{ url('/') }}" class="ml-6 sm:ml-0">
+                        <h1 class="navbar-title font-semibold text-gray-900">Fintech</h1>
                     </a>
-                    <ul class="list-none sm:flex hidden justify-end items-center flex-1"">
+                    <ul class="list-none sm:flex hidden justify-end items-center flex-1">
                         @auth
-                        <div class=" relative inline-block text-left font-poppins">
-                        <div>
-                            <button type="button"
-                                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                id="menu-button" aria-expanded="true" aria-haspopup="true" onclick="toggleDropdown()">
-                                <a class="nav-user group-hover:bg-gray-200" href="#" id="navbarDropdown" role="button"
-                                    aria-expanded="false">
-                                    Hi, {{ auth()->user()->username }}
-                                </a>
-                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                                    aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div id="dropdown"
-                            class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
-                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                            <div class="py-1" role="none">
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="/dashboard"
-                                    id="nav-dashboard">Dashboard</a></li>
-                                <form method="POST" action="/keluar" role="none">
-                                    @csrf
-                                    <button type="submit" class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                                        role="menuitem" tabindex="-1" id="nav-keluar">Keluar</button>
-                                </form>
+                        @if (auth()->user()->is_admin)
+                        <div class="relative inline-block text-left font-poppins">
+                            <div>
+                                <button type="button"
+                                    class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                    id="menu-button" aria-expanded="true" aria-haspopup="true"
+                                    onclick="toggleDropdown()">
+                                    <a class="nav-user group-hover:bg-gray-200" href="#" id="navbarDropdown"
+                                        role="button" aria-expanded="false">
+                                        Hi, {{ auth()->user()->username }}
+                                    </a>
+                                    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="dropdown"
+                                class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+                                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                <div class="py-1" role="none">
+                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="/dashboard"
+                                        id="nav-dashboard">Dashboard</a></li>
+                                    <form method="POST" action="/keluar" role="none">
+                                        @csrf
+                                        <button type="submit"
+                                            class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
+                                            role="menuitem" tabindex="-1" id="nav-keluar">Keluar</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                        @else
+                        <div class="relative inline-block text-left font-poppins">
+                            <div>
+                                <button type="button"
+                                    class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                    id="menu-button" aria-expanded="true" aria-haspopup="true"
+                                    onclick="toggleDropdown()">
+                                    <a class="nav-user group-hover:bg-gray-200" href="#" id="navbarDropdown"
+                                        role="button" aria-expanded="false">
+                                        Hi, {{ auth()->user()->username }}
+                                    </a>
+                                    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                        aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="dropdown"
+                                class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+                                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                <div class="py-1" role="none">
+                                    <form method="POST" action="/keluar" role="none">
+                                        @csrf
+                                        <button type="submit"
+                                            class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
+                                            role="menuitem" tabindex="-1" id="nav-keluar">Keluar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @else
+                        <li
+                            class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] bg-button-gradient px-3 py-1 rounded-md mr-10">
+                            <a href="{{ url('/daftar') }}">Registrasi</a>
+                        </li>
+                        <li
+                            class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] bg-button-login-gradient px-3 py-1 rounded-md mr-0">
+                            <a href="{{ url('/masuk') }}">Masuk</a>
+                            @endauth
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            @else
-            <li
-                class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] bg-button-gradient px-3 py-1 rounded-md mr-10">
-                <a href="{{ url('/daftar') }}">Daftar</a>
-            </li>
-            <li
-                class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] bg-button-login-gradient px-3 py-1 rounded-md mr-0">
-                <a href="{{ url('/masuk') }}">Masuk</a>
-                @endauth
-            </li>
-            </ul>
-            </nav>
         </div>
     </div>
-    </div>
 
-    <div class="font-poppins bg-white py-8">
+    <div class="font-poppins bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex min-h-[340px] flex-col md:flex-row mx-4 shadow-md">
-                <div class="md:flex-1 px-4">
-                    <div class="rounded-lg mt-5">
-                        <img class=" w-[340px]" src="{{ asset('gambar/' . $product->gambar) }}" alt="Product Image">
+            <div class="min-h-[340px] mx-4 shadow-md border-2 border-gray-400 rounded-lg sm:flex">
+                <div class="md:flex px-4 justify-center items-start">
+                    <div class="mt-5 flex justify-center overflow-hidden">
+                        <a href="{{ asset('gambar/' . $product->gambar) }}">
+                            <img src="{{ asset('gambar/' . $product->gambar) }}" alt="Product Image"
+                                class="object-contain w-[300px] h-[300px] object-center mx-2" target="_blank">
+                        </a>
                     </div>
                 </div>
-                <div class="md:flex-1 px-4 border-l-2 border-black">
-                    <div class="ml-4">
+                <div
+                    class="pt-6 sm:border-l-2 md:flex-1 px-4 sm:justify-start justify-center border-gray-400 flex py-3 pb-6 sm:w-2/3 w-full">
+                    <div class="ml-4 ">
                         <h2 class="text-2xl font-semibold mb-2">{{$product->nama_produk}}</h2>
                         <div class="flex mb-4">
                             <div class="mr-4">
@@ -88,21 +128,21 @@
                             </label>
                             <p style="font-size: 1.1rem; margin-top: 0.5rem;">
                                 <span class="text-base">{{ number_format($averageRating, 1)
-                                    }}/5</span></span>
-                                <span class=" text-base">({{$product->rates_count}} ulasan)
+                                    }}/5</span>
+                                <span class=" text-base">({{$product->rates_count}})
                                 </span>
                             </p>
                         </div>
                         <div>
                             <span class="font-bold">Deskripsi Produk:</span>
-                            <p class="text-sm mt-2 w-11/12">
+                            <p class="text-sm mt-2 w-full">
                                 {{$product->deskripsi}}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="min-h-[340px] md:flex-row mx-4 shadow-md mt-8">
+            <div class="min-h-[340px] md:flex-row mx-4 shadow-md my-8 rounded-lg border-2 border-gray-400">
                 <div class="md:flex-1 px-4 flex">
                     <div class="my-4 w-1/2">
                         <small class="text-base font-bold text-gray-700 ml-1">{{ $jumlahUlasan }} ulasan</small>
@@ -155,7 +195,8 @@
                 </div>
             </div>
         </div>
-
+    </div>
 </body>
+<script src="{{ asset('js/script.js') }}"></script>
 
 </html>

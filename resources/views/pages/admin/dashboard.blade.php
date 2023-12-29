@@ -7,7 +7,7 @@
         <div class="border-2 border-dashed rounded-lg border-gray-700">
             <div class="mx-auto grid xl:grid-cols-2 md:p-6 p-4 2xl:p-10 gap-x-4">
                 <div
-                    class="relative flex flex-col bg-clip-border rounded-xl text-gray-700 border border-blue-gray-100 shadow-sm bg-white dark:bg-gray-800">
+                    class="relative flex flex-col bg-clip-border rounded-xl text-gray-700 border border-blue-gray-100 shadow-sm bg-white mb-3">
                     <div
                         class="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr bg-gray-700 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -22,23 +22,15 @@
                         </svg>
                     </div>
                     <div class="p-4 text-right">
-                        <p
-                            class="block antialiased font-sans text-sm leading-normal font-normal dark:text-gray-200 text-gray-900">
+                        <p class="block antialiased text-sm leading-normal font-normal text-gray-900">
                             Finansial
                         </p>
-                        <h4
-                            class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug dark:text-gray-200 text-gray-900">
+                        <h4 class="block antialiased tracking-normal text-2xl font-semibold leading-snug text-gray-900">
                             Rp. {{number_format($totalKeseluruhan, 0, ',', '.')}}</h4>
-                    </div>
-                    <div class="border-t border-blue-gray-50 p-4">
-                        <p
-                            class="block antialiased font-sans text-base leading-relaxed font-normal dark:text-gray-200 text-gray-900">
-                            <strong class="text-green-500">+55%</strong>&nbsp;than last week
-                        </p>
                     </div>
                 </div>
                 <div
-                    class="relative flex flex-col bg-clip-border rounded-xl text-gray-700 border border-blue-gray-100 shadow-sm bg-white dark:bg-gray-800">
+                    class="relative flex flex-col bg-clip-border rounded-xl text-gray-700 border border-blue-gray-100 shadow-sm bg-white">
                     <div
                         class="bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-gradient-to-tr bg-gray-700 text-white shadow-gray-900/20 absolute grid h-12 w-12 place-items-center">
                         <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -48,26 +40,18 @@
                         </svg>
                     </div>
                     <div class="p-4 text-right">
-                        <p
-                            class="block antialiased font-sans text-sm leading-normal font-normal dark:text-gray-200 text-gray-900">
+                        <p class="block antialiased text-sm leading-normal font-normal text-gray-900">
                             Jumlah Produk</p>
-                        <h4
-                            class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug dark:text-gray-200 text-gray-900">
+                        <h4 class="block antialiased tracking-normal text-2xl font-semibold leading-snug text-gray-900">
                             {{$jumlahProduk}}</h4>
-                    </div>
-                    <div class="border-t border-blue-gray-50 p-4">
-                        <p
-                            class="block antialiased font-sans text-base leading-relaxed font-normal dark:text-gray-200 text-gray-900">
-                            <strong class="text-green-500">+3%</strong>&nbsp;than last month
-                        </p>
                     </div>
                 </div>
             </div>
             <div
-                class="col-span-12 rounded-sm border border-stroke bg-white dark:bg-gray-800 px-12 py-4 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8 mx-6 mb-6">
+                class="col-span-12 rounded-sm border border-stroke bg-white px-12 py-4 shadow-default sm:px-7.5 xl:col-span-8 mx-6 mb-6">
                 <div>
                     <div id="chartOne" style="min-height: 365px;">
-                        <h1 class="dark:text-gray-200 text-gray-900 text-2xl text-center font-semibold">
+                        <h1 class="text-gray-900 text-2xl text-center font-semibold">
                             Statistik
                             Finansial</h1>
                         <div class="mt-4">
@@ -83,69 +67,69 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var financialData = {!! json_encode($financialData) !!};
+    var financialData = {!! json_encode($financialData) !!};
 
-        var groupedData = financialData.reduce(function (accumulator, currentValue) {
-            var month = new Date(currentValue.tanggal).getMonth();
-            if (!accumulator[month]) {
-                accumulator[month] = 0;
-            }
-            accumulator[month] += currentValue.totalKeuangan;
-            return accumulator;
-        }, {});
-
-        var dates = Object.keys(groupedData).map(function (monthIndex) {
-            return monthNames[monthIndex];
-        });
-
-        var totalKeuangan = Object.values(groupedData);
-
-        var ctx = document.getElementById('myChart').getContext('2d');
-
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Total Keseluruhan',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                    data: totalKeuangan
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'category',
-                        title: {
-                            display: true,
-                            text: 'Bulan'
-                        }
-                    },
-                    y: {
-                        beginAtZero: false,
-                        title: {
-                            display: true,
-                            text: 'Total Keuangan'
-                        },
-                        ticks: {
-                            stepSize: 1000000,
-                            callback: function (value, index, values) {
-                                return new Intl.NumberFormat().format(value);
-                            }
-                        }
-                    }
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
+    // Parse dates and sort the data based on the date
+    financialData.sort(function (a, b) {
+        return new Date(a.tanggal) - new Date(b.tanggal);
     });
 
-    var monthNames = [
-        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-    ];
+    var dates = financialData.map(function (item) {
+        // Format date to 'dd-mm-yyyy'
+        return new Intl.DateTimeFormat('en-GB').format(new Date(item.tanggal));
+    });
+
+    var totalKeuangan = financialData.map(function (item) {
+        return item.totalKeuangan;
+    });
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Total Keseluruhan',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                data: totalKeuangan
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time', // Use time scale for dates
+                    time: {
+                        unit: 'day', // Display by day
+                        displayFormats: {
+                            day: 'DD-MM-YYYY' // Format 'dd-mm-yyyy'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Tanggal'
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Total Keuangan'
+                    },
+                    ticks: {
+                        stepSize: 1000000,
+                        callback: function (value, index, values) {
+                            return new Intl.NumberFormat().format(value);
+                        }
+                    }
+                }
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+});
 </script>

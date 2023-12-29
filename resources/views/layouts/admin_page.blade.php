@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
-    <link rel="stylesheet" href="https://flowbite-admin-dashboard.vercel.app//app.css">
 
 
 <body class="bg-gray-50 dark:bg-gray-800 font-poppins">

@@ -1,9 +1,9 @@
-@include('components.navbar')
+@extends('layouts.admin_page')
+@section('title', 'Fintech')
 
-@include('components.sidebar')
-
-<section class="bg-white font-poppins flex justify-end">
-    <div class="pb-4 pl-16 mx-auto max-w-3xl lg:pb-12">
+@section('content')
+<div class="px-4 pb-4 mt-6">
+    <div class="p-4 mx-auto max-w-3xl ">
         <h2 class="mb-4 text-[28px] font-bold text-gray-900">Tambahkan Produk</h2>
         <form action="/produk" method="post" enctype="multipart/form-data">
             @csrf
@@ -11,19 +11,19 @@
                 <div class="sm:col-span-2">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Produk</label>
                     <input type="text" name="nama_produk" id="nama_produk"
-                        class="border text-white text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500"
+                        class="bordertext-sm rounded-lg block w-full p-2.5 border-gray-600 border placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="Nama Produk" required="">
                 </div>
                 <div class="w-full">
                     <label for="price" class="block mb-2 text-sm font-medium text-gray-900">Harga</label>
                     <input type="number" name="harga" id="harga"
-                        class="border text-white text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500"
+                        class="border text-sm rounded-lg block w-full p-2.5 border-gray-600 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="1000" required="">
                 </div>
                 <div>
                     <label for="category" class="block mb-2 text-sm font-medium text-gray-900">Kategori</label>
                     <select id="kategori" name="kategori"
-                        class="border text-white text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500">
+                        class="border text-sm rounded-lg block w-full p-2.5 border-gray-600 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500">
                         <option selected="">Pilih Kategori</option>
                         <option value="Makanan">Makanan</option>
                         <option value="Minuman">Minuman</option>
@@ -33,11 +33,11 @@
                 <div class="sm:col-span-2">
                     <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Deskripsi</label>
                     <textarea id="deskripsi" name="deskripsi" rows="8"
-                        class="block p-2.5 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500"
+                        class="block p-2.5 w-full text-sm rounded-lg border border-gray-600 placeholder-gray-400 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="Berikan deskripsi produk disini"></textarea>
                 </div>
-                <div class="container w-full mx-auto items-center">
-                    <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden items-center">
+                <div class="container w-full">
+                    <div class="max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
                         <div class="px-4 py-6">
                             <div id="image-preview"
                                 class="max-w-sm p-6 mb-4 bg-gray-100 border-dashed border-2 border-gray-400 rounded-lg items-center mx-auto text-center cursor-pointer">
@@ -74,10 +74,12 @@
             </div>
             <div class="flex items-center justify-end mt-4 sm:mt-6">
                 <button type="submit"
-                    class="px-5 py-2.5 text-sm font-semibold text-center text-black rounded-lg bg-button-gradient focus:ring-4 focus:ring-primary-900 hover:opacity-70">
+                    class="font-poppins font-medium text-white hover:opacity-60 cursor-pointer text-[16px] px-3 py-2 rounded-md mr-10 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300">
                     Tambah Produk
                 </button>
             </div>
         </form>
     </div>
-</section>
+</div>
+
+@endsection

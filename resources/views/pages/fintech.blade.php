@@ -15,7 +15,7 @@
       <div className="xl:max-w-[1280px] w-full">
         <nav class="w-full flex py-6 justify-between items-center sm:px-16 mb-10">
           <a href="{{ url('/') }}" class="ml-6 sm:ml-0">
-            <h1 class="navbar-title">Fintech</h1>
+            <h1 class="navbar-title font-semibold text-gray-900">Fintech</h1>
           </a>
           <ul class="list-none sm:flex hidden justify-end items-center flex-1">
             <li class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] mr-10">
@@ -157,7 +157,7 @@
     <div className="bg-primary flex justify-center items-start">
       <div className="xl:max-w-[1280px] w-full">
         <section id="beranda" class="flex md:flex-row flex-col ">
-          <div class="flex-1 flexStart flex-col xl:px-16 px-6">
+          <div class="flex-1 flexStart flex-col sm:px-16 px-6">
             <div class="flex flex-row justify-between items-center w-full">
               <h1
                 class="flex-1 font-poppins font-semibold ss:text-[72px] text-[52px] ss:leading-[100px] leading-[75px]">
@@ -182,67 +182,77 @@
         </section>
       </div>
     </div>
-    <section className="flex" id="kategori">
-      <div class="flex font-poppins justify-center items-center">
-        <button type="submit" class="filter-button" data-filter="Seluruhnya" onclick="filterSelection('seluruhnya')">
+    <section class="mb-10 mt-20" id="kategori">
+      <div class="flex font-poppins justify-center items-center text-sm">
+        <button type="button" class="filter-button " data-filter="Seluruhnya" onclick="filterSelection('all')">
           <div class="hover:opacity-70">
             <img src="{{ asset('images/menu.png') }}" alt="Makanan & Minuman"
-              class="bg-white px-2 mr-2 hover:opacity-70 rounded-lg w-20 h-15 shadow-md" />
+              class="bg-white px-2 mr-4 hover:opacity-70 rounded-lg w-16 shadow-md" />
             <p class="text-center pt-1">Seluruhnya</p>
           </div>
         </button>
-        <button type="button" class="filter-button" data-filter="Makanan">
+        <button type="button" class="filter-button" data-filter="Makanan" onclick="filterSelection('Makanan')">
           <div class="hover:opacity-70">
             <img src="{{ asset('images/food.png') }}" alt="Makanan"
-              class="bg-white px-2 hover:opacity-70 rounded-lg w-20 h-15 shadow-md" />
+              class="bg-white px-2 mr-2 hover:opacity-70 rounded-lg w-16 shadow-md" />
             <p class="text-center pt-1">Makanan</p>
           </div>
         </button>
-        <button type="submit" class="filter-button" data-filter="Minuman">
+        <button type="button" class="filter-button" data-filter="Minuman" onclick="filterSelection('Minuman')">
           <div class="hover:opacity-70 mx-2">
             <img src="{{ asset('images/drink.png') }}" alt="Minuman"
-              class="bg-white px-2 hover:opacity-70 rounded-lg w-20 h-15 shadow-md" />
+              class="bg-white px-2 mr-2 hover:opacity-70 rounded-lg w-16 shadow-md" />
             <p class="text-center pt-1">Minuman</p>
           </div>
         </button>
-        <button type="submit" class="filter-button" data-filter="Lainnya">
+        <button type="button" class="filter-button" data-filter="Lainnya" onclick="filterSelection('Lainnya')">
           <div class="hover:opacity-70">
             <img src="{{ asset('images/delivery-box.png') }}" alt="Makanan & Minuman"
-              class="bg-white px-2 hover:opacity-70 rounded-lg w-20 h-15 shadow-md" />
+              class="bg-white px-2 hover:opacity-70 rounded-lg w-16 shadow-md" />
             <p class="text-center pt-1">Lainnya</p>
           </div>
         </button>
       </div>
     </section>
-    <section className="flex justify-center items-start sm:px-16 px-6" id="produk">
-      <div class="font-poppins my-2">
-        <h1 class="text-center my-5 font-bold text-3xl">Produk</h1>
-        <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:max-w-full sm:px-16 px-6 ">
-          @foreach ($products as $product)
-          <a class="duration-500 hover:scale-105 hover:shadow-xl" href="{{url("produk/$product->id/detail")}}">
-            <div class="bg-white rounded-lg shadow-md product-shadow" data-category="{{ $product->kategori }}">
+
+    <!-- Product Cards -->
+    <div class="font-poppins my-2">
+      <h1 class="text-center my-5 font-bold md:text-5xl text-4xl pb-4">Produk</h1>
+      <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:max-w-full sm:px-16 px-6 sm:mb-20 mb-4">
+        @foreach ($products as $product)
+        <a class="duration-500 hover:scale-105 hover:shadow-xl product" href="{{url("produk/$product->id/detail")}}"
+          data-category="{{ $product->kategori }}">
+          <div class="bg-white rounded-lg shadow-md pb-2">
+            <div style="width: 100%;" class="h-[200px] aspect-w-16 aspect-h-9">
+              <img src="{{ asset('gambar/' . $product->gambar) }}" alt="Produk"
+                class="rounded-t-lg object-contain w-full h-full">
+            </div>
+            <div class="mx-4 py-3">
+              <h3>{{ $product->nama_produk}}</h3>
+              <h3>Rp {{ number_format($product->harga, 0, ',', '.') }}</h3>
+            </div>
+            <div class="flex justify-between mx-4 pb-2">
+              <div class="flex">
+                <div class="mr-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="{{ $product->averageRating >= 1 ? 'currentColor' : 'gray' }}" class="w-5 h-5 text-yellow-500">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                  </svg>
+                </div>
+                <span class="text-base mr-2">{{ number_format($product->averageRating, 1) }}/5</span>
+                <span>({{ number_format($product->ulasan->count()) }})</span>
+              </div>
               <div>
-                <img src="{{asset('gambar/' . $product->gambar)}}" alt="Produk"
-                  class="rounded-t-lg w-[180px] h-[180px] mx-auto" />
-              </div>
-              <div class="mx-2 py-3">
-                <h3>{{ $product->nama_produk}}</h3>
-                <h3>Rp {{ number_format($product->harga, 0, ',', '.') }}</h3>
-              </div>
-              <div class="flex justify-between mx-2 pb-2">
-                <div>
-                  <p>★★★★★</p>
-                </div>
-                <div>
-                  <p>{{ $product['reviews'] }} Ulasan</p>
-                </div>
+                <p>{{ $product->ulasan_count}} Ulasan</p>
               </div>
             </div>
-            @endforeach
-        </div>
+          </div>
+        </a>
+        @endforeach
       </div>
-      </a>
-    </section>
+    </div>
     <div>
       @include('components.footer')
     </div>

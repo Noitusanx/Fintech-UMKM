@@ -3,17 +3,17 @@
 
 @section('content')
 <div class="px-4 pb-4 mt-6">
-    <div class="p-4 border-2 rounded-lg border-gray-700 ">
-        <div class="flex justify-between items-center mb-6 border-b-2 border-black pb-2">
-            <h1 class="m-0 text-[28px] font-bold">Produk</h1>
+    <div class="p-4 border-dashed border-2 rounded-lg border-gray-700 ">
+        <div class="flex justify-between items-center mb-6 border-b-2 border-gray-700 pb-2">
+            <h1 class="m-0 text-[28px] font-bold text-gray-900">Produk</h1>
             <button
-                class="font-poppins font-normal hover:opacity-60 cursor-pointer text-[16px] px-3 py-1 rounded-md mr-10 bg-button-grey text-white">
+                class="font-poppins font-medium text-white hover:opacity-60 cursor-pointer text-[16px] px-3 py-1 rounded-md mr-10 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300">
                 <a href="{{ url('/produk/tambah') }}">Tambah</a>
             </button>
         </div>
         <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-400">
-                <thead class="text-xs uppercase bg-gray-700 text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-900">
+                <thead class="text-xs uppercase border-2 border-gray-700 bg-white">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Nama Produk
@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
-                    <tr class="border-b bg-gray-800 border-gray-700">
+                    <tr class="border-2 border-gray-700">
                         <td class="px-6 py-4">
                             {{$product ->nama_produk}}
                         </td>
@@ -69,7 +69,10 @@
                             </div>
                         </td>
                         <td class="px-6 py-4">
-                            <img src="{{asset('gambar/' . $product->gambar)}}" alt="Gambar Produk" class="w-[80px]">
+                            <a href="{{ asset('gambar/' . $product->gambar) }}">
+                                <img src="{{asset('gambar/' . $product->gambar)}}" alt="Gambar Produk" class="w-[100px]"
+                                    target="_blank">
+                            </a>
                         </td>
                         <td>
                             <div class="flex space-x-2 mr-4">

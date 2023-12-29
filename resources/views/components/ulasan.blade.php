@@ -6,7 +6,7 @@
             <span>
                 <input type="radio" id="star5a" data-product-id="@Model.ProductId" class="star" name="rate" value="5"
                     required />
-                <label for="star5a" title="5 Stars" class="{{ $averageRating >= 5 ? 'active' : 'inactive' }}"></label>
+                <label for="star5a" title="5 Stars" class="{{ $averageRating >= 5 ? 'active' : 'inactive' }} "></label>
                 <input type="radio" id="star4a" data-product-id="@Model.ProductId" class="star" name="rate" value="4" />
                 <label for="star4a" title="4 Star" class="{{ $averageRating >= 5 ? 'active' : 'inactive' }}"></label>
                 <input type="radio" id="star3a" data-product-id="@Model.ProductId" class="star" name="rate" value="3" />
@@ -20,18 +20,16 @@
         </div>
         <label for="" class="">Ulasan</label>
         <div class="mt-2 py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-700">
-            <label for="comment" class="sr-only">Your comment</label>
             <textarea id="comment" name="ulasan" rows="6"
                 class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none placeholder-gray-400"
                 placeholder="Ketik ulasan..."></textarea>
         </div>
         <div class="flex items-center justify-end mt-4 sm:mt-6">
             <button type="submit" onclick="validateAndSubmit()"
-                class="px-5 py-2.5 text-sm font-semibold text-center text-black rounded-lg bg-button-gradient focus:ring-4 focus:ring-primary-900 hover:opacity-70">
+                class="px-5 py-2.5 text-sm font-semibold text-center text-gray-700 rounded-lg bg-button-gradient focus:ring-4 focus:ring-primary-900 hover:opacity-70">
                 Buat Ulasan
             </button>
         </div>
-
     </div>
 </form>
 <script>
